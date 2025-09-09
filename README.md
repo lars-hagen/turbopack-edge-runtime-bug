@@ -67,9 +67,43 @@ All of which are Node.js-specific APIs that are not available in the Edge Runtim
 
 ## Files
 
-- `src/middleware.ts` - A minimal middleware file (its mere existence triggers the bug)
-- `minimal-loader.js` - A webpack loader that does nothing (shows the bug isn't in the loader)
-- `next.config.ts` - Configures Turbopack to use the loader
+### `src/middleware.ts`
+A minimal middleware file - its mere existence triggers the bug:
+```typescript
+// Simple middleware file - its mere existence triggers the bug
+export function middleware() {
+}
+```
+
+### `minimal-loader.js`
+A webpack loader that does nothing (shows the bug isn't in the loader):
+```javascript
+module.exports = function(content) {
+  return content;
+};
+```
+
+### `next.config.ts`
+Configures Turbopack to use the loader:
+```typescript
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  turbopack: {
+    rules: {
+      // Apply minimal loader to all JS/TS files including middleware.ts
+      '**/*.{jsx,tsx,js,ts,mjs,mts}': {
+        loaders: [{
+          loader: './minimal-loader.js',
+          options: {}
+        }]
+      }
+    }
+  }
+};
+
+export default nextConfig;
+```
 
 ## Expected Behavior
 
