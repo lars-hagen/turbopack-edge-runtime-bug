@@ -33,12 +33,12 @@ lint TP1006 path.join(???*0*, (???*2* ? ???*5* : ???*7*)) is very dynamic
 
 1. Install dependencies:
    ```bash
-   pnpm install
+   npm install
    ```
 
 2. Run the dev server:
    ```bash
-   pnpm dev
+   npm run dev
    ```
    
    This will throw the error because the project uses Turbopack by default.
